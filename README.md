@@ -4,7 +4,7 @@
 
 A bilingual career assessment tool that helps students discover their ideal career path based on their skills, interests, and personality.
 
-![Career-_Consult Screenshot](screenshot.png) *Example screenshot - replace with your actual screenshot*
+
 
 ## Features ✨
 
