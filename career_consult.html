@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career_consult - Find Your Ideal  Career</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4895ef;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+            --warning: #f72585;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            animation: fadeIn 1s ease;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+            background: linear-gradient(to right, #4361ee, #3a0ca3);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .tagline {
+            font-size: 1.1rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .assessment-container {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .question-container {
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .question {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .option {
+            background-color: var(--light);
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        
+        .option:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.1);
+        }
+        
+        .option.selected {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .progress-container {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(to right, #4361ee, #4895ef);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .progress-text {
+            text-align: right;
+            font-size: 0.9rem;
+            color: var(--secondary);
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+        }
+        
+        button {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        
+        .btn-next {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-next:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        .btn-prev {
+            background-color: var(--light);
+            color: var(--dark);
+        }
+        
+        .btn-prev:hover {
+            background-color: #e9ecef;
+        }
+        
+        .btn-start {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            margin-top: 1rem;
+        }
+        
+        .btn-start:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        .result-container {
+            display: none;
+            animation: fadeIn 1s ease;
+        }
+        
+        .result-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .result-title {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .result-subtitle {
+            font-size: 1.1rem;
+            color: var(--secondary);
+        }
+        
+        .career-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid var(--accent);
+            transition: transform 0.3s ease;
+        }
+        
+        .career-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .career-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .match-percentage {
+            display: inline-block;
+            background-color: var(--success);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
+        }
+        
+        .career-description {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .skill-tag {
+            background-color: var(--light);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+        
+        .restart-btn {
+            background-color: var(--warning);
+            color: white;
+            display: block;
+            margin: 2rem auto 0;
+        }
+        
+        .restart-btn:hover {
+            background-color: #d1146a;
+        }
+        
+        .welcome-screen {
+            text-align: center;
+            animation: fadeIn 1s ease;
+        }
+        
+        .welcome-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .welcome-text {
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .floating-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+        
+        .shape {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 15s infinite linear;
+        }
+        
+        .shape.circle {
+            border-radius: 50%;
+            background: var(--primary);
+        }
+        
+        .shape.triangle {
+            width: 0;
+            height: 0;
+            border-left: 25px solid transparent;
+            border-right: 25px solid transparent;
+            border-bottom: 50px solid var(--accent);
+            background: transparent;
+        }
+        
+        .shape.square {
+            background: var(--warning);
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+            100% { transform: translateY(0) rotate(360deg); }
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-shapes">
+        <div class="shape circle" style="width: 100px; height: 100px; top: 10%; left: 5%;"></div>
+        <div class="shape triangle" style="top: 30%; right: 10%;"></div>
+        <div class="shape square" style="width: 80px; height: 80px; bottom: 15%; left: 15%;"></div>
+        <div class="shape circle" style="width: 60px; height: 60px; bottom: 25%; right: 20%;"></div>
+    </div>
+    
+    <div class="container">
+        <header>
+            <h1>CareerConsult</h1>
+            <p class="tagline">Discover your perfect tech career path with our interactive assessment</p>
+        </header>
+        
+        <div class="assessment-container">
+            <!-- Welcome Screen -->
+            <div class="welcome-screen" id="welcomeScreen">
+                <div class="welcome-icon">🧭</div>
+                <h2>Find Your Ideal Tech Career</h2>
+                <p class="welcome-text">
+                    Are you a  student confused about which specialization to choose? 
+                    Take our 20-question assessment to discover which career paths 
+                    align best with your skills, interests, and personality.
+                </p>
+                <button class="btn-start" id="startBtn">Start Assessment</button>
+            </div>
+            
+            <!-- Question Container -->
+            <div class="question-container" id="questionContainer" style="display: none;">
+                <div class="question" id="questionText"></div>
+                <div class="options" id="optionsContainer"></div>
+                
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress" id="progressBar"></div>
+                    </div>
+                    <div class="progress-text" id="progressText">Question 1 of 20</div>
+                </div>
+                
+                <div class="nav-buttons">
+                    <button class="btn-prev" id="prevBtn" disabled>Previous</button>
+                    <button class="btn-next" id="nextBtn">Next</button>
+                </div>
+            </div>
+            
+            <!-- Results Container -->
+            <div class="result-container" id="resultContainer">
+                <div class="result-header">
+                    <h2 class="result-title">Your Career Recommendations</h2>
+                    <p class="result-subtitle">Based on your assessment results, here are the top 3 career paths we recommend for you:</p>
+                </div>
+                
+                <div id="careerResults"></div>
+                
+                <button class="restart-btn" id="restartBtn">Take Assessment Again</button>
+            </div>
+        </div>
+        
+        <footer>
+                <p>Made by     <b>Alfaz Emon</b></p>
+            <p> Know which field better for you</p>
+        
+        </footer>
+    </div>
+
+
+    <script>
+
+
+        // 20+ Bilingual Questions (English + Bangla)
+        const questions = [
+            {
+                question: "When solving problems, you prefer: / সমস্যা সমাধানের সময়, আপনি পছন্দ করেন:",
+                options: [
+                    "Creative visual solutions / সৃজনশীল ভিজুয়াল সমাধান",
+                    "Step-by-step logical analysis / ধাপে ধাপে যৌক্তিক বিশ্লেষণ",
+                    "Hands-on practical experiments / ব্যবহারিক পরীক্ষা-নিরীক্ষা",
+                    "Researching existing knowledge / বিদ্যমান জ্ঞান গবেষণা"
+                ],
+                weights: {
+                    "Graphic Design": 25, "Architecture": 20, "Data Science": 15,
+                    "Mechanical Engineering": 20, "Medical Research": 20
+                }
+            },
+            {
+                question: "Your ideal work environment is: / আপনার আদর্শ কাজের পরিবেশ হলো:",
+                options: [
+                    "Art studio or creative space / আর্ট স্টুডিও বা সৃজনশীল স্থান",
+                    "Laboratory with equipment / যন্ত্রপাতি সহ গবেষণাগার",
+                    "Office with team collaboration / দলগত সহযোগিতার অফিস",
+                    "Field work with hands-on tasks / ব্যবহারিক কাজের মাঠপর্যায়"
+                ],
+                weights: {
+                    "Fine Arts": 30, "Chemistry": 25, "Business Administration": 25,
+                    "Civil Engineering": 20, "Environmental Science": 20
+                }
+            },
+            {
+                question: "In school, you enjoyed: / স্কুলে, আপনি উপভোগ করতেন:",
+                options: [
+                    "Art and creative writing / শিল্প ও সৃজনশীল লেখা",
+                    "Math and science experiments / গণিত ও বিজ্ঞান পরীক্ষা",
+                    "Group projects and presentations / গ্রুপ প্রকল্প ও উপস্থাপনা",
+                    "Practical vocational subjects / ব্যবহারিক বৃত্তিমূলক বিষয়"
+                ],
+                weights: {
+                    "Music Production": 25, "Physics": 30, "Marketing": 25,
+                    "Electrical Engineering": 20, "Nursing": 20
+                }
+            },
+            {
+                question: "Which activity interests you most? / কোন কাজটি আপনাকে সবচেয়ে আকর্ষণ করে?",
+                options: [
+                    "Designing posters or websites / পোস্টার বা ওয়েবসাইট ডিজাইন করা",
+                    "Building mechanical models / যান্ত্রিক মডেল তৈরি করা",
+                    "Analyzing financial data / আর্থিক তথ্য বিশ্লেষণ করা",
+                    "Helping people with health issues / স্বাস্থ্য সমস্যায় মানুষকে সাহায্য করা"
+                ],
+                weights: {
+                    "Fashion Design": 30, "Aerospace Engineering": 25, "Finance": 25,
+                    "Medical Doctor": 20, "Psychology": 15
+                }
+            },
+            {
+                question: "Your strength is: / আপনার শক্তি হলো:",
+                options: [
+                    "Creativity and imagination / সৃজনশীলতা ও কল্পনা",
+                    "Analytical thinking / বিশ্লেষণাত্মক চিন্তাভাবনা",
+                    "Communication skills / যোগাযোগ দক্ষতা",
+                    "Precision and attention to detail / স্পষ্টতা ও বিস্তারিত মনোযোগ"
+                ],
+                weights: {
+                    "Film Production": 25, "AI/ML Engineering": 30, "Human Resources": 20,
+                    "Dentistry": 25, "Mathematics": 20
+                }
+            },
+            {
+                question: "You're most comfortable working with: / আপনি সবচেয়ে স্বাচ্ছন্দ্যে কাজ করতে পারেন:",
+                options: [
+                    "Colors and visual elements / রঙ এবং ভিজুয়াল উপাদান",
+                    "Numbers and data / সংখ্যা এবং তথ্য",
+                    "People and teams / মানুষ এবং দল",
+                    "Tools and machinery / সরঞ্জাম এবং যন্ত্রপাতি"
+                ],
+                weights: {
+                    "Graphic Design": 30, "Accounting": 25, "Entrepreneurship": 25,
+                    "Chemical Engineering": 20, "Public Health": 15
+                }
+            },
+            {
+                question: "Which subject fascinates you? / কোন বিষয়টি আপনাকে মুগ্ধ করে?",
+                options: [
+                    "Human psychology and behavior / মানব মনোবিজ্ঞান ও আচরণ",
+                    "Technological innovations / প্রযুক্তিগত উদ্ভাবন",
+                    "Economic systems / অর্থনৈতিক ব্যবস্থা",
+                    "Natural phenomena / প্রাকৃতিক ঘটনা"
+                ],
+                weights: {
+                    "Psychology": 25, "Game Development": 30, "Finance": 25,
+                    "Biology": 20, "Environmental Science": 20
+                }
+            },
+            {
+                question: "Your ideal project involves: / আপনার আদর্শ প্রকল্পে রয়েছে:",
+                options: [
+                    "Designing something beautiful / কিছু সুন্দর ডিজাইন করা",
+                    "Solving a complex technical problem / একটি জটিল প্রযুক্তিগত সমস্যা সমাধান করা",
+                    "Helping people directly / সরাসরি মানুষকে সাহায্য করা",
+                    "Discovering new information / নতুন তথ্য আবিষ্কার করা"
+                ],
+                weights: {
+                    "Architecture": 30, "Cybersecurity": 25, "Pharmacy": 20,
+                    "Physics": 25, "Medical Research": 20
+                }
+            },
+            {
+                question: "When learning, you prefer: / শেখার সময়, আপনি পছন্দ করেন:",
+                options: [
+                    "Visual demonstrations / ভিজুয়াল প্রদর্শন",
+                    "Hands-on practice / হাতে-কলমে অনুশীলন",
+                    "Theoretical concepts / তাত্ত্বিক ধারণা",
+                    "Group discussions / গ্রুপ আলোচনা"
+                ],
+                weights: {
+                    "Fine Arts": 25, "App Development": 30, "Mathematics": 20,
+                    "Business Administration": 25, "Nursing": 15
+                }
+            },
+            {
+                question: "You're most proud of: / আপনি সবচেয়ে গর্বিত:",
+                options: [
+                    "Your creative portfolio / আপনার সৃজনশীল পোর্টফোলিও",
+                    "Your technical certifications / আপনার প্রযুক্তিগত সার্টিফিকেশন",
+                    "Your social impact / আপনার সামাজিক প্রভাব",
+                    "Your research findings / আপনার গবেষণার ফলাফল"
+                ],
+                weights: {
+                    "Fashion Design": 30, "Cloud Computing": 25, "Public Health": 20,
+                    "Chemistry": 25, "Medical Doctor": 15
+                }
+            },
+            {
+                question: "When browsing the internet, you typically: / ইন্টারনেট ব্রাউজ করার সময়, আপনি সাধারণত:",
+                options: [
+                    "Look for design inspiration and art / ডিজাইন অনুপ্রেরণা এবং শিল্প খুঁজে দেখুন",
+                    "Read about new technologies / নতুন প্রযুক্তি সম্পর্কে পড়ুন",
+                    "Follow business and finance news / ব্যবসা ও অর্থসংক্রান্ত খবর অনুসরণ করুন",
+                    "Explore scientific discoveries / বৈজ্ঞানিক আবিষ্কারগুলি অন্বেষণ করুন"
+                ],
+                weights: {
+                    "Graphic Design": 25, "Web Development": 30, "Marketing": 20,
+                    "Biology": 25, "Psychology": 15
+                }
+            },
+            {
+                question: "Your approach to challenges is: / চ্যালেঞ্জের প্রতি আপনার দৃষ্টিভঙ্গি হল:",
+                options: [
+                    "Think outside the box / বাক্সের বাইরে চিন্তা করুন",
+                    "Follow systematic methods / পদ্ধতিগত পদ্ধতি অনুসরণ করুন",
+                    "Collaborate with others / অন্যদের সাথে সহযোগিতা করুন",
+                    "Analyze deeply before acting / কাজ করার আগে গভীরভাবে বিশ্লেষণ করুন"
+                ],
+                weights: {
+                    "Music Production": 25, "Electrical Engineering": 30, "Human Resources": 20,
+                    "Data Science": 25, "Medical Research": 15
+                }
+            },
+            {
+                question: "Which workshop would you attend? / আপনি কোন কর্মশালায় অংশ নেবেন?",
+                options: [
+                    "Creative writing or photography / সৃজনশীল লেখা বা ফটোগ্রাফি",
+                    "Coding or robotics / কোডিং বা রোবোটিক্স",
+                    "Leadership or public speaking / নেতৃত্ব বা পাবলিক স্পিকিং",
+                    "Scientific research methods / বৈজ্ঞানিক গবেষণা পদ্ধতি"
+                ],
+                weights: {
+                    "Film Production": 25, "AI/ML Engineering": 30, "Entrepreneurship": 20,
+                    "Chemistry": 25, "Environmental Science": 15
+                }
+            },
+            {
+                question: "Your favorite books/movies are about: / আপনার প্রিয় বই/সিনেমা সম্পর্কে:",
+                options: [
+                    "Art and creativity / শিল্প এবং সৃজনশীলতা",
+                    "Technology and future / প্রযুক্তি এবং ভবিষ্যত",
+                    "Business success stories / ব্যবসায়ের সাফল্যের গল্প",
+                    "Scientific discoveries / বৈজ্ঞানিক আবিষ্কার"
+                ],
+                weights: {
+                    "Fine Arts": 25, "Game Development": 30, "Accounting": 20,
+                    "Physics": 25, "Psychology": 15
+                }
+            },
+            {
+                question: "When helping others, you: / অন্যদের সাহায্য করার সময়, আপনি:",
+                options: [
+                    "Show them creative solutions / তাদের সৃজনশীল সমাধান দেখান",
+                    "Explain technical details / প্রযুক্তিগত বিবরণ ব্যাখ্যা করুন",
+                    "Organize group efforts / গ্রুপ প্রচেষ্টা সংগঠিত করুন",
+                    "Provide researched information / গবেষণা করা তথ্য প্রদান করুন"
+                ],
+                weights: {
+                    "Architecture": 25, "Cybersecurity": 30, "Nursing": 20,
+                    "Biology": 25, "Public Health": 15
+                }
+            },
+            {
+                question: "Your ideal weekend involves: / আপনার আদর্শ সপ্তাহান্তে জড়িত:",
+                options: [
+                    "Creating art or music / শিল্প বা সঙ্গীত তৈরি করা",
+                    "Building or fixing things / জিনিস তৈরি বা মেরামত করা",
+                    "Networking with people / মানুষের সাথে নেটওয়ার্কিং",
+                    "Reading scientific journals / বৈজ্ঞানিক জার্নাল পড়া"
+                ],
+                weights: {
+                    "Fashion Design": 25, "Mechanical Engineering": 30, "Marketing": 20,
+                    "Mathematics": 25, "Medical Doctor": 15
+                }
+            },
+            {
+                question: "You collect or are interested in: / আপনি সংগ্রহ করেন বা আগ্রহী:",
+                options: [
+                    "Art supplies or design items / আর্ট সরবরাহ বা ডিজাইন আইটেম",
+                    "Tech gadgets and tools / প্রযুক্তি গ্যাজেট এবং সরঞ্জাম",
+                    "Business case studies / ব্যবসায়ের কেস স্টাডি",
+                    "Scientific specimens / বৈজ্ঞানিক নমুনা"
+                ],
+                weights: {
+                    "Graphic Design": 25, "Cloud Computing": 30, "Finance": 20,
+                    "Chemistry": 25, "Environmental Science": 15
+                }
+            },
+            {
+                question: "Your role in group projects is usually: / গ্রুপ প্রকল্পে আপনার ভূমিকা সাধারণত:",
+                options: [
+                    "The creative idea generator / সৃজনশীল ধারণা জেনারেটর",
+                    "The technical problem solver / প্রযুক্তিগত সমস্যা সমাধানকারী",
+                    "The organizer and leader / সংগঠক এবং নেতা",
+                    "The researcher and analyst / গবেষক এবং বিশ্লেষক"
+                ],
+                weights: {
+                    "Music Production": 25, "App Development": 30, "Business Administration": 20,
+                    "Data Science": 25, "Psychology": 15
+                }
+            },
+            {
+                question: "You're most motivated when: / আপনি সবচেয়ে অনুপ্রাণিত হন যখন:",
+                options: [
+                    "Expressing yourself creatively / সৃজনশীলভাবে নিজেকে প্রকাশ করা",
+                    "Solving complex technical challenges / জটিল প্রযুক্তিগত চ্যালেঞ্জ সমাধান করা",
+                    "Helping others achieve goals / অন্যদের লক্ষ্য অর্জনে সাহায্য করা",
+                    "Discovering how things work / জিনিসগুলি কীভাবে কাজ করে তা আবিষ্কার করা"
+                ],
+                weights: {
+                    "Film Production": 25, "Electrical Engineering": 30, "Human Resources": 20,
+                    "Physics": 25, "Medical Research": 15
+                }
+            },
+            {
+                question: "Your dream job would allow you to: / আপনার স্বপ্নের চাকরি আপনাকে অনুমতি দেবে:",
+                options: [
+                    "Create beautiful designs / সুন্দর ডিজাইন তৈরি করুন",
+                    "Build innovative technologies / উদ্ভাবনী প্রযুক্তি তৈরি করুন",
+                    "Lead teams and organizations / দল এবং সংস্থাগুলি নেতৃত্ব দিন",
+                    "Advance human knowledge / মানুষের জ্ঞান এগিয়ে নিন"
+                ],
+                weights: {
+                    "Fine Arts": 25, "AI/ML Engineering": 30, "Entrepreneurship": 20,
+                    "Biology": 25, "Mathematics": 15
+                }
+            }
+        ];
+
+        // Career Descriptions for 30+ fields (English + Bangla)
+        const careerDescriptions = {
+            // Technology Fields
+            "Web Development": {
+                description: "Build and maintain websites using programming languages like HTML, CSS, JavaScript / ওয়েবসাইট তৈরি এবং রক্ষণাবেক্ষণ করুন এইচটিএমএল, সিএসএস, জাভাস্ক্রিপ্টের মতো প্রোগ্রামিং ভাষা ব্যবহার করে",
+                skills: ["HTML/CSS", "JavaScript", "React", "Node.js"]
+            },
+            "App Development": {
+                description: "Create mobile applications for iOS and Android platforms / iOS এবং Android প্ল্যাটফর্মের জন্য মোবাইল অ্যাপ্লিকেশন তৈরি করুন",
+                skills: ["Swift/Kotlin", "React Native", "UI/UX Design", "API Integration"]
+            },
+            "Data Science": {
+                description: "Extract insights from data using statistical and computational methods / পরিসংখ্যানগত এবং গণনীয় পদ্ধতি ব্যবহার করে ডেটা থেকে অন্তর্দৃষ্টি বের করুন",
+                skills: ["Python/R", "Machine Learning", "Data Visualization", "SQL"]
+            },
+            "AI/ML Engineering": {
+                description: "Develop artificial intelligence systems and machine learning models / কৃত্রিম বুদ্ধিমত্তা সিস্টেম এবং মেশিন লার্নিং মডেল তৈরি করুন",
+                skills: ["Python", "TensorFlow", "Neural Networks", "Algorithm Design"]
+            },
+            "Cybersecurity": {
+                description: "Protect systems and networks from digital attacks / ডিজিটাল আক্রমণ থেকে সিস্টেম এবং নেটওয়ার্ক রক্ষা করুন",
+                skills: ["Network Security", "Ethical Hacking", "Cryptography", "Risk Assessment"]
+            },
+            "Game Development": {
+                description: "Design and program video games for various platforms / বিভিন্ন প্ল্যাটফর্মের জন্য ভিডিও গেম ডিজাইন এবং প্রোগ্রাম করুন",
+                skills: ["Unity", "C#", "3D Modeling", "Game Physics"]
+            },
+            "Cloud Computing": {
+                description: "Design and manage cloud-based systems and services / ক্লাউড-ভিত্তিক সিস্টেম এবং পরিষেবাগুলি ডিজাইন এবং পরিচালনা করুন",
+                skills: ["AWS", "Azure", "DevOps", "Containerization"]
+            },
+
+            // Engineering Fields
+            "Mechanical Engineering": {
+                description: "Design and analyze mechanical systems and machines / যান্ত্রিক সিস্টেম এবং মেশিন ডিজাইন এবং বিশ্লেষণ করুন",
+                skills: ["CAD", "Thermodynamics", "Material Science", "Robotics"]
+            },
+            "Civil Engineering": {
+                description: "Plan, design, and oversee construction projects / নির্মাণ প্রকল্প পরিকল্পনা, নকশা এবং তত্ত্বাবধান করুন",
+                skills: ["Structural Design", "Surveying", "Construction Management", "Geotechnical"]
+            },
+            "Electrical Engineering": {
+                description: "Work with electrical systems, electronics, and electromagnetism / বৈদ্যুতিক সিস্টেম, ইলেকট্রনিক্স এবং ইলেক্ট্রোম্যাগনেটিজম নিয়ে কাজ করুন",
+                skills: ["Circuit Design", "Power Systems", "Embedded Systems", "Control Systems"]
+            },
+            "Chemical Engineering": {
+                description: "Develop chemical manufacturing processes and products / রাসায়নিক উত্পাদন প্রক্রিয়া এবং পণ্য বিকাশ করুন",
+                skills: ["Process Design", "Biotechnology", "Petrochemicals", "Quality Control"]
+            },
+            "Biomedical Engineering": {
+                description: "Combine engineering principles with medical sciences / প্রকৌশল নীতিগুলিকে চিকিৎসা বিজ্ঞানের সাথে একত্রিত করুন",
+                skills: ["Medical Devices", "Biomechanics", "Tissue Engineering", "Imaging Systems"]
+            },
+            "Aerospace Engineering": {
+                description: "Design aircraft, spacecraft, and related systems / বিমান, মহাকাশযান এবং সম্পর্কিত সিস্টেম ডিজাইন করুন",
+                skills: ["Aerodynamics", "Propulsion", "Flight Mechanics", "Avionics"]
+            },
+
+            // Medical Fields
+            "Medical Doctor": {
+                description: "Diagnose and treat illnesses and injuries / রোগ এবং আঘাত নির্ণয় এবং চিকিত্সা করুন",
+                skills: ["Diagnosis", "Patient Care", "Medical Ethics", "Clinical Skills"]
+            },
+            "Dentistry": {
+                description: "Diagnose and treat oral health issues / মৌখিক স্বাস্থ্য সমস্যা নির্ণয় এবং চিকিত্সা করুন",
+                skills: ["Dental Anatomy", "Oral Surgery", "Prosthodontics", "Periodontics"]
+            },
+            "Pharmacy": {
+                description: "Prepare and dispense medications, provide drug information / ওষুধ প্রস্তুত এবং বিতরণ করুন, ওষুধের তথ্য প্রদান করুন",
+                skills: ["Pharmacology", "Medication Therapy", "Drug Interactions", "Pharmaceutical Care"]
+            },
+            "Nursing": {
+                description: "Provide patient care and support medical staff / রোগীর যত্ন প্রদান করুন এবং চিকিৎসা কর্মীদের সহায়তা করুন",
+                skills: ["Patient Assessment", "Wound Care", "Medication Administration", "Emergency Care"]
+            },
+            "Medical Research": {
+                description: "Conduct studies to improve healthcare and treatments / স্বাস্থ্যসেবা এবং চিকিত্সা উন্নত করতে গবেষণা পরিচালনা করুন",
+                skills: ["Clinical Trials", "Data Analysis", "Scientific Writing", "Laboratory Techniques"]
+            },
+            "Public Health": {
+                description: "Improve community health through education and policy / শিক্ষা এবং নীতি মাধ্যমে সম্প্রদায়ের স্বাস্থ্য উন্নত করুন",
+                skills: ["Epidemiology", "Health Policy", "Community Education", "Disease Prevention"]
+            },
+
+            // Business Fields
+            "Business Administration": {
+                description: "Manage organizational operations and strategy / প্রতিষ্ঠানের কার্যক্রম এবং কৌশল পরিচালনা করুন",
+                skills: ["Leadership", "Strategic Planning", "Operations Management", "Financial Analysis"]
+            },
+            "Finance": {
+                description: "Manage money and investments for individuals/organizations / ব্যক্তি/সংস্থার জন্য অর্থ এবং বিনিয়োগ পরিচালনা করুন",
+                skills: ["Financial Modeling", "Investment Analysis", "Risk Management", "Portfolio Management"]
+            },
+            "Marketing": {
+                description: "Promote products/services and analyze consumer behavior / পণ্য/পরিষেবা প্রচার করুন এবং ভোক্তা আচরণ বিশ্লেষণ করুন",
+                skills: ["Digital Marketing", "Market Research", "Brand Management", "Consumer Behavior"]
+            },
+            "Accounting": {
+                description: "Prepare and examine financial records / আর্থিক রেকর্ড প্রস্তুত এবং পরীক্ষা করুন",
+                skills: ["Financial Reporting", "Taxation", "Auditing", "Bookkeeping"]
+            },
+            "Entrepreneurship": {
+                description: "Start and grow new business ventures / নতুন ব্যবসায়িক উদ্যোগ শুরু করুন এবং বাড়ান",
+                skills: ["Business Planning", "Fundraising", "Innovation", "Risk Management"]
+            },
+            "Human Resources": {
+                description: "Manage recruitment and employee relations / নিয়োগ এবং কর্মচারী সম্পর্ক পরিচালনা করুন",
+                skills: ["Talent Acquisition", "Employee Development", "Labor Relations", "Compensation"]
+            },
+
+            // Arts Fields
+            "Graphic Design": {
+                description: "Create visual concepts to communicate ideas / ধারণা যোগাযোগ করতে ভিজ্যুয়াল ধারণা তৈরি করুন",
+                skills: ["Adobe Creative Suite", "Typography", "Branding", "Layout Design"]
+            },
+            "Architecture": {
+                description: "Design buildings and physical structures / ভবন এবং শারীরিক কাঠামো ডিজাইন করুন",
+                skills: ["CAD", "3D Modeling", "Sustainable Design", "Structural Systems"]
+            },
+            "Fine Arts": {
+                description: "Create original artworks in various media / বিভিন্ন মিডিয়ায় মূল শিল্পকর্ম তৈরি করুন",
+                skills: ["Drawing", "Painting", "Sculpture", "Art Theory"]
+            },
+            "Fashion Design": {
+                description: "Create clothing and accessory designs / পোশাক এবং আনুষাঙ্গিক ডিজাইন তৈরি করুন",
+                skills: ["Pattern Making", "Textile Knowledge", "Fashion Illustration", "Trend Analysis"]
+            },
+            "Music Production": {
+                description: "Create, record, and produce musical compositions / সঙ্গীত রচনা তৈরি, রেকর্ড এবং প্রযোজনা করুন",
+                skills: ["Audio Engineering", "Mixing", "Music Theory", "DAW Software"]
+            },
+            "Film Production": {
+                description: "Produce and direct motion pictures / চলচ্চিত্র প্রযোজনা এবং পরিচালনা করুন",
+                skills: ["Cinematography", "Editing", "Screenwriting", "Production Management"]
+            },
+
+            // Sciences Fields
+            "Physics": {
+                description: "Study matter, energy, and their interactions / পদার্থ, শক্তি এবং তাদের মিথস্ক্রিয়া অধ্যয়ন করুন",
+                skills: ["Mathematical Modeling", "Experimental Design", "Data Analysis", "Theoretical Physics"]
+            
+            }
+        };
+          
+
+        // DOM elements
+        const welcomeScreen = document.getElementById('welcomeScreen');
+        const questionContainer = document.getElementById('questionContainer');
+        const questionText = document.getElementById('questionText');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const startBtn = document.getElementById('startBtn');
+        const resultContainer = document.getElementById('resultContainer');
+        const careerResults = document.getElementById('careerResults');
+        const restartBtn = document.getElementById('restartBtn');
+
+        // Assessment state
+        let currentQuestion = 0;
+        let answers = [];
+        let scores = {
+           
+        // 30+ Career Fields with initial scores
+      
+            // Technology
+            "Web Development": 0,
+            "App Development": 0,
+            "Data Science": 0,
+            "AI/ML Engineering": 0,
+            "Cybersecurity": 0,
+            "Game Development": 0,
+            "Cloud Computing": 0,
+
+            // Engineering
+            "Mechanical Engineering": 0,
+            "Civil Engineering": 0,
+            "Electrical Engineering": 0,
+            "Chemical Engineering": 0,
+            "Biomedical Engineering": 0,
+            "Aerospace Engineering": 0,
+            
+            // Medical
+            "Medical Doctor": 0,
+            "Dentistry": 0,
+            "Pharmacy": 0,
+            "Nursing": 0,
+            "Medical Research": 0,
+            "Public Health": 0,
+            
+            // Business
+            "Business Administration": 0,
+            "Finance": 0,
+            "Marketing": 0,
+            "Accounting": 0,
+            "Entrepreneurship": 0,
+            "Human Resources": 0,
+            
+            // Arts
+            "Graphic Design": 0,
+            "Architecture": 0,
+            "Fine Arts": 0,
+            "Fashion Design": 0,
+            "Music Production": 0,
+            "Film Production": 0,
+            
+            // Sciences
+            "Physics": 0,
+            "Chemistry": 0,
+            "Biology": 0,
+            "Environmental Science": 0,
+            "Mathematics": 0,
+            "Psychology": 0
+        };
+
+        // Initialize the assessment
+        function initAssessment() {
+            welcomeScreen.style.display = 'none';
+            questionContainer.style.display = 'block';
+            showQuestion();
+        }
+
+        // Show current question
+        function showQuestion() {
+            const question = questions[currentQuestion];
+            questionText.textContent = question.question;
+            
+            // Clear previous options
+            optionsContainer.innerHTML = '';
+            
+            // Add new options
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                optionElement.textContent = option;
+                optionElement.dataset.index = index;
+                
+                // Check if this option was previously selected
+                if (answers[currentQuestion] === index) {
+                    optionElement.classList.add('selected');
+                }
+                
+                optionElement.addEventListener('click', selectOption);
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            // Update progress
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            progressText.textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+            
+            // Update nav buttons
+            prevBtn.disabled = currentQuestion === 0;
+            nextBtn.textContent = currentQuestion === questions.length - 1 ? 'See Results' : 'Next';
+        }
+
+        // Handle option selection
+        function selectOption(e) {
+            const selectedOption = e.target;
+            const options = document.querySelectorAll('.option');
+            
+            // Remove selected class from all options
+            options.forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked option
+            selectedOption.classList.add('selected');
+            
+            // Store the answer
+            answers[currentQuestion] = parseInt(selectedOption.dataset.index);
+        }
+
+        // Calculate career scores based on answers
+        function calculateScores() {
+            // Reset scores
+            for (const career in scores) {
+                scores[career] = 0;
+            }
+            
+            // Calculate new scores
+            answers.forEach((answerIndex, questionIndex) => {
+                const question = questions[questionIndex];
+                const selectedOptionWeights = question.weights;
+                
+                for (const career in selectedOptionWeights) {
+                    scores[career] += selectedOptionWeights[career];
+                }
+            });
+            
+            return scores;
+        }
+
+        // Show results
+        function showResults() {
+            questionContainer.style.display = 'none';
+            resultContainer.style.display = 'block';
+            
+            const careerScores = calculateScores();
+            
+            // Convert scores to array and sort
+            const sortedCareers = Object.entries(careerScores)
+                .map(([name, score]) => ({ name, score }))
+                .sort((a, b) => b.score - a.score);
+            
+            // Get top 3 careers
+            const topCareers = sortedCareers.slice(0, 3);
+            
+            // Display results
+            careerResults.innerHTML = '';
+            
+            topCareers.forEach((career, index) => {
+                const percentage = Math.min(100, Math.round((career.score / 500) * 100) + 20);
+                const careerInfo = careerDescriptions[career.name];
+                
+                const careerCard = document.createElement('div');
+                careerCard.className = 'career-card';
+                careerCard.innerHTML = `
+                    <h3 class="career-title">
+                        ${index + 1}. ${career.name}
+                        <span class="match-percentage">${percentage}% match</span>
+                    </h3>
+                    <p class="career-description">${careerInfo.description}</p>
+                    <div class="skills-list">
+                        ${careerInfo.skills.map(skill => `<span class="skill-tag">${skill}</span>`).join('')}
+                    </div>
+                `;
+                
+                // Add animation delay
+                careerCard.style.animationDelay = `${index * 0.2}s`;
+                careerCard.style.animation = 'slideIn 0.5s ease forwards';
+                careerCard.style.opacity = '0';
+                
+                careerResults.appendChild(careerCard);
+            });
+        }
+
+        // Event listeners
+        startBtn.addEventListener('click', initAssessment);
+        
+        nextBtn.addEventListener('click', () => {
+            if (answers[currentQuestion] === undefined) {
+                alert('Please select an option before proceeding.');
+                return;
+            }
+            
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                showQuestion();
+            } else {
+                showResults();
+            }
+        });
+        
+        prevBtn.addEventListener('click', () => {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion();
+            }
+        });
+        
+        restartBtn.addEventListener('click', () => {
+            currentQuestion = 0;
+            answers = [];
+            resultContainer.style.display = 'none';
+            welcomeScreen.style.display = 'block';
+        });
+
+        // Animate floating shapes
+        const shapes = document.querySelectorAll('.shape');
+        shapes.forEach((shape, index) => {
+            const duration = 15 + Math.random() * 10;
+            const delay = Math.random() * 5;
+            const y = 10 + Math.random() * 20;
+            
+            gsap.to(shape, {
+                y: `-=${y}`,
+                duration: duration,
+                delay: delay,
+                repeat: -1,
+                yoyo: true,
+                ease: "sine.inOut"
+            });
+            
+            gsap.to(shape, {
+                rotation: 360,
+                duration: duration * 3,
+                repeat: -1,
+                ease: "none"
+            });
+        });
+
+
+
+    </script>
